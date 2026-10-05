@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Section from '../ui/Section'
 import SectionHeading from '../ui/SectionHeading'
-import { events } from '../../data/events'
+import { events } from '../../data/event'
 import { formatMoney } from '../../data/utils/money'
 
 export default function Events() {

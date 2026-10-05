@@ -1,5 +1,5 @@
 import HeroArt from './HeroArt'
-import { events } from '../../data/events'
+import { events } from '../../data/event'
 
 const label = 'mb-1 block text-xs font-semibold text-white/75'
 const field = 'w-full border-white/10 bg-[#14101c] text-white [color-scheme:dark]'
