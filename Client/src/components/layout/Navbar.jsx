@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -22,10 +21,7 @@ export default function Navbar() {
       links.forEach((link) => {
         const section = document.getElementById(link.id);
 
-        if (
-          section &&
-          window.scrollY >= section.offsetTop - 150
-        ) {
+        if (section && window.scrollY >= section.offsetTop - 150) {
           current = link.id;
         }
       });
@@ -56,7 +52,6 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-30 border-b border-base-300 bg-base-100/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-
         {/* Logo */}
         <Link to="/" className="btn btn-ghost text-lg">
           OneStop <span className="text-accent">Event</span>
@@ -93,11 +88,7 @@ export default function Navbar() {
                   after:transition-transform
                   after:duration-500
                   after:ease-in-out
-                  ${
-                    isActive
-                      ? "after:scale-x-100"
-                      : "after:scale-x-0"
-                  }`}
+                  ${isActive ? "after:scale-x-100" : "after:scale-x-0"}`}
               >
                 {link.label}
               </a>
@@ -106,12 +97,12 @@ export default function Navbar() {
         </nav>
 
         {/* Login */}
-        <button className="btn btn-primary btn-sm">
-          Login
+        <button className="">
+          <div className="aura text-amber-400">
+            <button className="btn text-amber-400">Login</button>
+          </div>
         </button>
-
       </div>
     </header>
   );
 }
-
