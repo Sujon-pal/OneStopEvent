@@ -1,126 +1,117 @@
-import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useActiveSection } from "../../hook/useActiveSection";
+
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const links = [
-  { label: "Home", hash: "#home" },
-  { label: "Events", hash: "#events" },
-  { label: "Packages", hash: "#packages" },
-  { label: "Services", hash: "#services" },
-  { label: "Recent", hash: "#recent" },
-  { label: "Reviews", hash: "#reviews" },
+  { label: "Home", id: "home" },
+  { label: "Events", id: "events" },
+  { label: "Packages", id: "packages" },
+  { label: "Services", id: "services" },
+  { label: "Recent", id: "recent" },
+  { label: "Reviews", id: "reviews" },
 ];
 
-const sectionIds = links.map((link) => link.hash.slice(1));
-
-const linkBase =
-  "relative py-1 transition-colors duration-300 ease-out after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-300 after:ease-out";
-
-const linkOn = "text-primary after:scale-x-100";
-
-const linkOff = "text-base-content/60 hover:text-base-content after:scale-x-0";
-
 export default function Navbar() {
-  const { pathname, hash } = useLocation();
-  const active = useActiveSection(sectionIds, pathname === "/");
+  const [active, setActive] = useState("home");
 
+  // Detect active section while scrolling
   useEffect(() => {
-    if (pathname !== "/" || !hash) return;
+    const handleScroll = () => {
+      let current = "home";
 
-    const section = document.getElementById(hash.slice(1));
+      links.forEach((link) => {
+        const section = document.getElementById(link.id);
 
-    section?.scrollIntoView({
+        if (
+          section &&
+          window.scrollY >= section.offsetTop - 150
+        ) {
+          current = link.id;
+        }
+      });
+
+      setActive(current);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Smooth scroll to section
+  const handleNavClick = (id) => {
+    setActive(id);
+
+    document.getElementById(id)?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
-  }, [pathname, hash]);
 
-  const closeMenu = () => document.activeElement?.blur();
+    window.history.replaceState(null, "", `#${id}`);
+  };
 
   return (
     <header className="sticky top-0 z-30 border-b border-base-300 bg-base-100/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-2">
-          <div className="dropdown md:hidden">
-            <button
-              type="button"
-              tabIndex={0}
-              className="btn btn-ghost btn-square btn-sm"
-              aria-label="Open menu"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
 
-            <ul
-              tabIndex={0}
-              onClick={closeMenu}
-              className="menu dropdown-content z-10 mt-3 w-52 rounded-box border border-base-300 bg-base-100 p-2 shadow"
-            >
-              {links.map((link) => {
-                const isActive = active === link.hash.slice(1);
+        {/* Logo */}
+        <Link to="/" className="btn btn-ghost text-lg">
+          OneStop <span className="text-accent">Event</span>
+        </Link>
 
-                return (
-                  <li key={link.hash}>
-                    <Link
-                      to={{ pathname: "/", hash: link.hash }}
-                      className={isActive ? "menu-active" : ""}
-                      aria-current={isActive ? "location" : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          <Link to="/" >
-            <div className="aura text-black">
-              <button className="btn">
-                OneStop <span className="text-accent">Event</span>
-              </button>
-            </div>
-          </Link>
-        </div>
-
+        {/* Navigation */}
         <nav
           aria-label="Main navigation"
           className="hidden gap-7 text-sm font-medium md:flex"
         >
           {links.map((link) => {
-            const isActive = active === link.hash.slice(1);
+            const isActive = active === link.id;
 
             return (
-              <Link
-                key={link.hash}
-                to={{ pathname: "/", hash: link.hash }}
-                className={`${linkBase} ${isActive ? linkOn : linkOff}`}
+              <a
+                key={link.id}
+                href={`#${link.id}`}
                 aria-current={isActive ? "location" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.id);
+                }}
+                className={`relative py-1
+                  transition-colors duration-500 ease-in-out
+                  ${
+                    isActive
+                      ? "text-primary"
+                      : "text-base-content/60 hover:text-base-content"
+                  }
+                  after:absolute after:inset-x-0 after:-bottom-1
+                  after:h-0.5 after:rounded-full
+                  after:bg-accent
+                  after:origin-left
+                  after:transition-transform
+                  after:duration-500
+                  after:ease-in-out
+                  ${
+                    isActive
+                      ? "after:scale-x-100"
+                      : "after:scale-x-0"
+                  }`}
               >
                 {link.label}
-              </Link>
+              </a>
             );
           })}
         </nav>
 
-        <div className="aura aura-xl text-amber-600">
-          <button className="btn">Login</button>
-        </div>
+        {/* Login */}
+        <button className="btn btn-primary btn-sm">
+          Login
+        </button>
+
       </div>
     </header>
   );
 }
+
