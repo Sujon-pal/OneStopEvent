@@ -8,7 +8,7 @@ export default function HeroArt() {
       width="550"
       height="650"
       fetchPriority="high"
-      className="aura text-orange-600 bg-yellow-200 aspect-550/650 w-full rounded-xl object-cover shadow-2xl"
+      className=" bg-yellow-200 aspect-550/650 w-full rounded-xl object-cover shadow-2xl"
     />
   )
 }
