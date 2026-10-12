@@ -31,7 +31,7 @@ export default function Hero() {
       }}
     >
       {/* Dark overlay for better text readability */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/50" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/40" />
 
       {/* Subtle gradient overlay */}
       <div
@@ -40,7 +40,7 @@ export default function Hero() {
       />
 
       {/* Hero Content */}
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-10 md:py-6 ">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-10 md:py-6 ">
         <div className="max-w-2xl">
           {/* Hero Heading */}
           <h1 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">

@@ -1,12 +1,10 @@
-import weddingImg from '../assets/Event/wedding.webp'
-import holud from '../assets/event/holud.webp'
-import birthday from '../assets/event/birthday.webp'
-import puja from '../assets/event/puja.webp'
-import corporate from '../assets/event/corporate.webp'
-
+import weddingImg from "../assets/Event/wedding.webp";
+import holud from "../assets/event/holud.webp";
+import birthday from "../assets/event/birthday.webp";
+import puja from "../assets/event/puja.webp";
+import corporate from "../assets/event/corporate.webp";
 
 export const events = [
-
   {
     name: "Wedding",
     image: weddingImg,
@@ -29,6 +27,7 @@ export const events = [
     icon: "🎂",
     desc: "Themes, cake, games, magician and music.",
     price: 15000,
+    hot: true,
   },
   {
     name: "Puja",

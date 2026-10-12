@@ -1,37 +1,326 @@
-const tier = (name, guests, price, items) => ({ name, guests, price, items })
+// Package content for each event. One list of rows per event, and for each tier (Basic, Standard,
+// Premium) one value per row. null means the row is not included in that tier.
+// In Puja values, {p} becomes the puja the customer picked.
 
-// Basic, Standard, Premium for each event. Same number of lines so the cards line up.
+const rows = (...pairs) => pairs.map(([icon, label]) => ({ icon, label }));
+const tier = (name, guests, price, values) => ({ name, guests, price, values });
+
 export const packages = {
-  Wedding: [
-    tier('Basic', 100, 95000, ['Flower stage with couple seating', '1 photographer, 6 hours', 'Highlight video', 'Bridal makeup']),
-    tier('Standard', 300, 180000, ['Themed stage with entrance gate', '3 photographers, 10 hours', 'Full-event video, DJ and sound', 'Bridal makeup and groom styling']),
-    tier('Premium', 600, 340000, ['Grand stage with lighting design', '5 photographers, full day, drone', 'Live band plus DJ', 'Makeup, mehendi and trial']),
-  ],
-  Holud: [
-    tier('Basic', 50, 45000, ['Marigold stage with backdrop', 'Holud trays decoration', '1 photographer, 4 hours', 'Mehendi artist for the bride']),
-    tier('Standard', 150, 85000, ['Flower swing and themed stage', 'Trays and ritual items', '2 photographers, highlight video', 'DJ, mehendi and hair styling']),
-    tier('Premium', 300, 150000, ['Full marigold decoration with lighting', 'Trays and matching outfits', '4 photographers, video and drone', 'Live singer, DJ and dance']),
-  ],
-  Birthday: [
-    tier('Basic', 30, 20000, ['Balloon decoration and banner', 'Cake table with backdrop', '1 photographer, 2 hours', 'Basic sound system']),
-    tier('Standard', 80, 38000, ['Theme decoration with balloon arch', 'Cake table and photo corner', '2 photographers, highlight video', 'DJ, kids games and a host']),
-    tier('Premium', 150, 70000, ['Custom theme with full lighting', 'Designer cake table and photo booth', '3 photographers, video and drone', 'Magician or clown, DJ, host']),
-  ],
-  Puja: [
-    tier('Basic', 100, 25000, ['Idol and puja items', 'Purohit (priest)', 'Pandal with flower decoration', '1 photographer, 4 hours']),
-    tier('Standard', 300, 50000, ['Puja items with flowers and bel patra', 'Purohit and dhaki', 'Themed pandal with lighting', '2 photographers, highlight video']),
-    tier('Premium', 800, 95000, ['Full puja items with fruits', 'Purohit, dhaki and arati group', 'Large pandal, live streaming', 'Immersion (bishorjon) transport']),
-  ],
-  Corporate: [
-    tier('Basic', 50, 48000, ['Stage with printed backdrop', 'Sound, 2 microphones, projector', 'Registration table', '1 photographer, 4 hours']),
-    tier('Standard', 150, 95000, ['Branded stage, banners, standees', 'Sound, 4 microphones, screen', 'Professional host, live streaming', 'Registration desk and ID cards']),
-    tier('Premium', 400, 180000, ['Full branded setup with lighting', 'Full AV with large screen', 'Host, streaming and recording', 'Event manager and welcome kits']),
-  ],
-}
+  Wedding: {
+    rows: rows(
+      ["🎨", "Stage and decoration"],
+      ["📸", "Photography"],
+      ["🎬", "Video"],
+      ["🎧", "Music and sound"],
+      ["💄", "Bride and groom"],
+      ["🪔", "Rituals"],
+      ["🎤", "Hosting"],
+      ["🛡️", "Team and safety"],
+      ["🪑", "Rentals and venue"],
+      ["💌", "Invitations and gifts"],
+    ),
+    tiers: [
+      tier("Basic", 100, 95000, [
+        "Simple stage with flowers and couple seating",
+        "1 photographer, 6 hours",
+        "Highlight video, 1 videographer",
+        "Basic sound system",
+        "Bridal makeup",
+        "Kazi or purohit arrangement",
+        null,
+        "1 event coordinator, setup and cleanup",
+        null,
+        null,
+      ]),
+      tier("Standard", 300, 180000, [
+        "Themed flower stage with entrance gate and lights",
+        "3 photographers, 10 hours",
+        "Full-event video, 2 videographers",
+        "DJ and sound system",
+        "Bridal makeup and groom styling",
+        "Kazi or purohit, with ritual items",
+        "Host or anchor",
+        "Event coordinator, 4 staff and security",
+        "Chair and table rental",
+        null,
+      ]),
+      tier("Premium", 600, 340000, [
+        "Grand stage, full flower decoration and lighting design",
+        "5 photographers, full day",
+        "Cinematic film, 3 videographers and drone",
+        "Live band or singer, plus DJ",
+        "Bridal makeup, groom styling, mehendi and trial",
+        "Kazi or purohit, ritual items and car decoration",
+        "Host or anchor, and guest management",
+        "Dedicated event manager, 8 staff and security",
+        "Chair and table rental, and venue booking help",
+        "Wedding cards and return gift packs",
+      ]),
+    ],
+  },
+  Holud: {
+    rows: rows(
+      ["🎨", "Stage and decoration"],
+      ["🌼", "Holud rituals"],
+      ["📸", "Photography"],
+      ["🎬", "Video"],
+      ["🎧", "Music and fun"],
+      ["💄", "Look"],
+      ["🎤", "Hosting"],
+      ["🛡️", "Team and safety"],
+      ["🪑", "Rentals"],
+    ),
+    tiers: [
+      tier("Basic", 50, 45000, [
+        "Marigold stage with backdrop",
+        "Holud trays (dala) decoration",
+        "1 photographer, 4 hours",
+        null,
+        "Basic sound system",
+        "Mehendi artist for the bride",
+        null,
+        "1 event coordinator, setup and cleanup",
+        null,
+      ]),
+      tier("Standard", 150, 85000, [
+        "Flower swing, themed stage and entrance",
+        "Trays and ritual items",
+        "2 photographers, 6 hours",
+        "Highlight video, 1 videographer",
+        "DJ and sound system",
+        "Mehendi artist and hair styling",
+        null,
+        "Event coordinator and 3 staff",
+        "Chair and table rental",
+      ]),
+      tier("Premium", 300, 150000, [
+        "Full marigold and flower decoration with lighting",
+        "Trays, ritual items and matching outfits",
+        "4 photographers, full day",
+        "Cinematic video, 2 videographers and drone",
+        "Live singer or band, DJ and dance performance",
+        "Mehendi, bride makeup and hair styling",
+        "Host or anchor",
+        "Dedicated event manager and 6 staff",
+        "Chair and table rental, and generator backup",
+      ]),
+    ],
+  },
+  Birthday: {
+    rows: rows(
+      ["🎨", "Decoration"],
+      ["🎂", "Cake table"],
+      ["📸", "Photography"],
+      ["🎬", "Video"],
+      ["🎧", "Music"],
+      ["🎈", "Fun for guests"],
+      ["🎁", "Gifts"],
+      ["🛡️", "Team and safety"],
+      ["🪑", "Rentals"],
+    ),
+    tiers: [
+      tier("Basic", 30, 20000, [
+        "Balloon decoration and banner",
+        "Cake table with backdrop",
+        "1 photographer, 2 hours",
+        null,
+        "Basic sound system",
+        null,
+        null,
+        "1 event coordinator, setup and cleanup",
+        null,
+      ]),
+      tier("Standard", 80, 38000, [
+        "Theme decoration with balloon arch",
+        "Cake table, backdrop and photo corner",
+        "2 photographers, 4 hours",
+        "Highlight video",
+        "DJ and sound system",
+        "Kids games and activities, with a host",
+        null,
+        "Event coordinator and 3 staff",
+        "Chair and table rental",
+      ]),
+      tier("Premium", 150, 70000, [
+        "Custom theme with full lighting and balloon arch",
+        "Designer cake table and photo booth",
+        "3 photographers, 6 hours",
+        "Full video and drone",
+        "DJ, sound and dance floor lights",
+        "Magician or clown, games, and a host",
+        "Return gift packs",
+        "Dedicated event manager and 5 staff",
+        "Chair and table rental, and generator backup",
+      ]),
+    ],
+  },
+  Puja: {
+    rows: rows(
+      ["🪔", "Idol and puja items"],
+      ["🙏", "Priest and ritual team"],
+      ["🎨", "Pandal and decoration"],
+      ["📸", "Photography"],
+      ["🎬", "Video"],
+      ["🎧", "Sound and program"],
+      ["🪑", "Seating"],
+      ["🛡️", "Team and safety"],
+      ["🚚", "Immersion"],
+    ),
+    tiers: [
+      tier("Basic", 100, 25000, [
+        "Idol and puja items for {p}",
+        "Purohit (priest)",
+        "Pandal or altar with flower and light decoration",
+        "1 photographer, 4 hours",
+        null,
+        "Basic sound system",
+        "Floor seating for guests",
+        "1 event coordinator, setup and cleanup",
+        null,
+      ]),
+      tier("Standard", 300, 50000, [
+        "Idol and puja items for {p}, with flowers, durba and bel patra",
+        "Purohit and dhaki (dhak players)",
+        "Themed pandal with flower decoration and lighting",
+        "2 photographers, 6 hours",
+        "Highlight video",
+        "Sound system and cultural program setup",
+        "Floor seating, and chairs for elders",
+        "Coordinator, volunteers and security management",
+        null,
+      ]),
+      tier("Premium", 800, 95000, [
+        "Idol and puja items for {p}, with flowers, durba, bel patra and fruits",
+        "Purohit, dhaki and arati group",
+        "Large pandal with full lighting",
+        "4 photographers, full day",
+        "Full video and live streaming",
+        "Sound system and stage for cultural program",
+        "Chair and table rental for all guests",
+        "Dedicated event manager, security and volunteers",
+        "Immersion (bishorjon) transport",
+      ]),
+    ],
+  },
+  Corporate: {
+    rows: rows(
+      ["🎨", "Stage and branding"],
+      ["🎧", "Sound and screens"],
+      ["🎤", "Hosting"],
+      ["🪪", "Registration"],
+      ["📸", "Photography"],
+      ["🎬", "Video"],
+      ["📡", "Live streaming"],
+      ["🛡️", "Team and safety"],
+      ["🏛️", "Venue and guests"],
+    ),
+    tiers: [
+      tier("Basic", 50, 48000, [
+        "Stage with printed backdrop",
+        "Sound with 2 microphones, and projector",
+        null,
+        "Registration table",
+        "1 photographer, 4 hours",
+        null,
+        null,
+        "1 event coordinator, setup and teardown",
+        null,
+      ]),
+      tier("Standard", 150, 95000, [
+        "Branded stage, backdrop, banners and standees",
+        "Sound, 4 microphones, projector and screen",
+        "Professional host or MC",
+        "Registration desk and ID cards",
+        "2 photographers, 8 hours",
+        "Event video, 1 videographer",
+        "Live streaming",
+        "Event coordinator and 4 staff",
+        null,
+      ]),
+      tier("Premium", 400, 180000, [
+        "Full branded setup, banners, standees and lighting",
+        "Full AV: sound, microphones, projector and large screen",
+        "Professional host or MC",
+        "Registration desk, ID cards and welcome kits",
+        "3 photographers, full day",
+        "Event video, 2 videographers and drone",
+        "Live streaming and recording",
+        "Dedicated event manager, security and parking management",
+        "Guest management and venue booking help",
+      ]),
+    ],
+  },
+};
 
-// Header colours for Basic, Standard, Premium.
+// Puja packages need the customer to pick a puja first. Its price is added to the tier price.
+export const pujaOptions = [
+  {
+    name: "Saraswati Puja",
+    price: 5000,
+    note: "1 day. Idol and puja items included",
+  },
+  {
+    name: "Lakshmi Puja",
+    price: 8000,
+    note: "1 day. Idol and puja items included",
+  },
+  {
+    name: "Durga Puja",
+    price: 60000,
+    note: "Up to 5 days. Large idol, pandal and rituals",
+  },
+  {
+    name: "Kali Puja",
+    price: 25000,
+    note: "1 night. Large idol and puja items",
+  },
+  {
+    name: "Jagadhatri Puja",
+    price: 30000,
+    note: "1 to 3 days. Idol and rituals",
+  },
+  {
+    name: "Ganesh Puja",
+    price: 12000,
+    note: "1 to 3 days. Idol and puja items",
+  },
+  {
+    name: "Vishwakarma Puja",
+    price: 8000,
+    note: "1 day. Tools and machine puja setup",
+  },
+  { name: "Janmashtami", price: 15000, note: "1 day with night rituals" },
+  {
+    name: "Satyanarayan Puja",
+    price: 5000,
+    note: "Half day, at home or a small hall",
+  },
+  { name: "Kartik Puja", price: 8000, note: "1 day. Idol and puja items" },
+  {
+    name: "Other puja",
+    price: 5000,
+    note: "Our team will call you to confirm the details",
+  },
+];
+
+export const tierTaglines = [
+  "The essentials, done well",
+  "More people, more hours",
+  "A full team handles everything",
+];
+
+// Header gradient and button colour for Basic, Standard, Premium (all inside the brand palette).
 export const tierStyles = [
-  'from-[#6d28d9] to-[#8b5cf6]',
-  'from-[#b45309] to-[#f59e0b]',
-  'from-[#5b21b6] to-[#9f1239]',
-]
+  {
+    header: "from-[#6d28d9] to-[#8b5cf6]",
+    button: "bg-[#6d28d9] text-white hover:bg-[#5b21b6]",
+  },
+  { header: "from-[#b45309] to-[#f59e0b]", button: "btn-accent" },
+  {
+    header: "from-[#5b21b6] to-[#9f1239]",
+    button: "bg-[#5b21b6] text-white hover:bg-[#4c1d95]",
+  },
+];
+
+// How many rows show before "View details".
+export const VISIBLE_ROWS = 3;

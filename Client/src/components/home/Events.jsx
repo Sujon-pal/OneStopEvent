@@ -34,7 +34,7 @@ export default function Events() {
               className="absolute inset-0 bg-linear-to-t from-black/85 via-black/35 to-transparent"
             />
             {e.hot && (
-              <span className="badge badge-accent badge-sm absolute right-4 top-4 font-bold  shadow-lg shadow-accent/50">
+              <span className="absolute right-4 top-4 rounded-full bg-white px-3 py-1 text-xs font-semibold text-amber-800">
                 Most booked
               </span>
             )}

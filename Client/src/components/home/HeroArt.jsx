@@ -6,7 +6,7 @@ export default function HeroArt() {
       src={heroImg}
       alt="A decorated wedding stage with flowers and warm lights"
       width="550"
-      height="650"
+      height="450"
       fetchPriority="high"
       className=" bg-yellow-200 aspect-550/650 w-full rounded-xl object-cover shadow-2xl"
     />
