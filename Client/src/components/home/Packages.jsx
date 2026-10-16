@@ -12,12 +12,18 @@ const bookingSteps = [
   "Pay 30% to hold your date",
 ];
 
-export default function Packages() {
-  const [tab, setTab] = useState("Wedding");
-  const [pujaName, setPujaName] = useState("");
-  const [open, setOpen] = useState({}); // which cards show all details, like { 'Wedding-1': true }
+// Only events that have a package show as tabs.
+const packageEvents = events.filter((e) => packages[e.name]);
 
-  const { rows, tiers } = packages[tab];
+export default function Packages() {
+  const [tab, setTab] = useState(packageEvents[0]?.name ?? "Wedding"); // Selected event tab 
+  const [pujaName, setPujaName] = useState(""); // selected puja name for the Puja tab, or "" if none selected
+  const [open, setOpen] = useState({}); // which card details are open 
+
+  const data = packages[tab];
+  if (!data) return null;
+
+  const { rows, tiers } = data;
   const puja =
     tab === "Puja"
       ? (pujaOptions.find((p) => p.name === pujaName) ?? null)
@@ -25,6 +31,10 @@ export default function Packages() {
   const keyOf = (i) => `${tab}-${i}`;
   const allOpen = tiers.every((_, i) => open[keyOf(i)]);
 
+  const onTab = (name) => {
+    setTab(name);
+    setPujaName("");
+  };
   const toggle = (i) => setOpen((o) => ({ ...o, [keyOf(i)]: !o[keyOf(i)] }));
   const toggleAll = () =>
     setOpen((o) => {
@@ -46,13 +56,13 @@ export default function Packages() {
         aria-label="Event type"
         className="mt-6 flex flex-wrap gap-2"
       >
-        {events.map((e) => (
+        {packageEvents.map((e) => (
           <button
             key={e.name}
             role="tab"
             type="button"
             aria-selected={tab === e.name}
-            onClick={() => setTab(e.name)}
+            onClick={() => onTab(e.name)}
             className={`btn rounded-full ${tab === e.name ? "btn-primary" : "border-base-300 bg-base-100"}`}
           >
             {e.icon} {e.name}

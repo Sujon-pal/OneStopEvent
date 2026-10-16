@@ -45,7 +45,7 @@ export default function PackageCard({
         <p className="text-sm text-white/85">{tierTaglines[index]}</p>
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 flex-col p-6 ">
         <span className="badge badge-soft badge-primary w-fit font-semibold">
           Up to {tier.guests} guests
         </span>
@@ -64,7 +64,7 @@ export default function PackageCard({
         <button
           type="button"
           disabled={locked}
-          className={`btn mt-5 w-full rounded-full border-0 ${locked ? "" : style.button}`}
+          className={` btn mt-5 w-full rounded-full border-0 ${locked ? "" : style.button}`}
         >
           {locked ? "Choose a puja first" : "Book this package"}
         </button>
